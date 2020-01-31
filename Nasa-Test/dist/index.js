@@ -38,6 +38,7 @@ app.get('/timeline', (request, response) => __awaiter(void 0, void 0, void 0, fu
     let dateString = request.query['dates'];
     let parsedStr = dateString.replace(/['"]+/g, '');
     const dates = parsedStr.split(',');
+    dates.sort();
     // fetch from nasa api
     for (let date of dates) {
         const result = yield daily.imageGet(date);

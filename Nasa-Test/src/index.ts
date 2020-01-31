@@ -30,6 +30,7 @@ app.get( '/timeline', async (request: any, response: any) => {
     let dateString = request.query['dates']
     let parsedStr = dateString.replace(/['"]+/g, '')
     const dates = parsedStr.split(',')
+    dates.sort()
     
     // fetch from nasa api
     for (let date of dates) {
