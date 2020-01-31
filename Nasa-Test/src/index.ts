@@ -6,6 +6,13 @@ const app = express();
 app.use(express.json());
 const port = 8002; // default port to listen
 
+// CORS enabled
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*'); 
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    next();
+});
+
 // define a route handler for the default home page
 app.get( '/', async ( request: any, response: any ) => {
     response.send({});

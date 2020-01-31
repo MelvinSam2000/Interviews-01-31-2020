@@ -18,6 +18,12 @@ const daily_image_1 = require("./nasa/daily-image");
 const app = express_1.default();
 app.use(express_1.default.json());
 const port = 8002; // default port to listen
+// CORS enabled
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    next();
+});
 // define a route handler for the default home page
 app.get('/', (request, response) => __awaiter(void 0, void 0, void 0, function* () {
     response.send({});
