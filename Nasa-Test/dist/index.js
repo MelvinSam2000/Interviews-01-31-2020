@@ -36,17 +36,28 @@ app.get('/timeline', (request, response) => __awaiter(void 0, void 0, void 0, fu
     let output = [];
     // parse dates string into multiple dates
     let dateString = request.query['dates'];
-    let parsedStr = dateString.replace(/['"]+/g, '');
-    const dates = parsedStr.split(',');
-    dates.sort();
+    const dates = exports.parseTimeQuery(dateString);
     // fetch from nasa api
     for (let date of dates) {
         const result = yield daily.imageGet(date);
         output.push(result);
     }
     // send list of results
-    response.send(output);
+    const jsonOutput = {
+        'timeline': output
+    };
+    response.send(jsonOutput);
 }));
+/**
+ * @param dateString of type string, containing comma separated dates, obtained from route query
+ * @returns list of sorted date strings that can be used in nasa api
+ */
+exports.parseTimeQuery = (dateString) => {
+    let parsedStr = dateString.replace(/['"]+/g, '');
+    const dates = parsedStr.split(',');
+    dates.sort();
+    return dates;
+};
 // start the Express server
 app.listen(port, () => {
     // tslint:disable-next-line:no-console

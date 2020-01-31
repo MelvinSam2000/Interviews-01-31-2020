@@ -37,7 +37,10 @@ app.get( '/timeline', async (request: any, response: any) => {
     }
 
     // send list of results
-    response.send(output);
+    const jsonOutput = {
+        'timeline': output
+    }
+    response.send(jsonOutput);
 });
 
 /**
