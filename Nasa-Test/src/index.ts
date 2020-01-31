@@ -20,6 +20,28 @@ app.get( '/daily', async ( request: any, response: any ) => {
     response.send(result);
 } );
 
+// Set up /timeline route 
+app.get( '/timeline', async (request: any, response: any) => {
+
+    const daily = new DailyImage();
+    let output = []
+
+    // parse dates string into multiple dates
+    let dateString = request.query['dates']
+    let parsedStr = dateString.replace(/['"]+/g, '')
+    const dates = parsedStr.split(',')
+    
+    // fetch from nasa api
+    for (let date of dates) {
+        const result = await daily.imageGet(date)
+        output.push(result)
+    }
+
+    // send list of results
+    response.send(output)
+});
+
+
 // start the Express server
 app.listen( port, () => {
     // tslint:disable-next-line:no-console
