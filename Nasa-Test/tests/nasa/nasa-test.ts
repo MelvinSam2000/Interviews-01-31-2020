@@ -1,5 +1,7 @@
 import { } from 'jasmine';
 import { DailyImage } from '../../src/nasa/daily-image';
+import { parseTimeQuery } from '../../src/index';
+import { parse } from 'querystring';
 
 describe('daily_image_tests', () => {
     it('invalid date', async () => {
@@ -47,4 +49,18 @@ describe('daily_image_tests', () => {
         );
     });
 
+});
+
+describe('time_string_parser', () => {
+    it('valid parsing', () => {
+        const str = "\"string with quotes\"";
+        const parsed = parseTimeQuery(str);
+        expect(parsed).toEqual(["string with quotes"]);
+    })
+
+    it('valid comma separation and sorting', () => {
+        const str = "a,b,c,dee,word,1,2";
+        const parsed = parseTimeQuery(str);
+        expect(parsed).toEqual(["1", "2", "a", "b", "c", "dee", "word"]);
+    })
 });
